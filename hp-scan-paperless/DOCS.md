@@ -34,6 +34,8 @@ destination stops working; on the next start it registers again.
 | Resolution (dpi) | `300` | good for text recognition |
 | Colour mode | `Gray` | `Color` for photos and coloured forms |
 | Multi-page scan as one PDF | on | otherwise one document per page |
+| Emulated two-sided scan | off | adds "<name> duplex": scan fronts, flip the stack, scan backs |
+| Two-sided page order | `document-wise` | order after flipping the whole stack |
 | Debug log | off | more details in the *Log* tab |
 
 Save, start, and switch on **Start on boot** and **Watchdog**. The *Log* tab shows

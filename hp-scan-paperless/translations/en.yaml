@@ -20,6 +20,12 @@ configuration:
   multi_page_pdf:
     name: Multi-page scan as one PDF
     description: All pages of one scan become one document (otherwise one document per page)
+  emulated_duplex:
+    name: Emulated two-sided scan
+    description: Adds a second entry "<name> duplex" on the printer. Scan the fronts with it, flip the stack, scan the backs with it again; both are merged into one PDF
+  duplex_mode:
+    name: Two-sided page order
+    description: document-wise = backs scanned after flipping the whole stack (usual for a document feeder)
   debug:
     name: Debug log
     description: More details in the add-on log

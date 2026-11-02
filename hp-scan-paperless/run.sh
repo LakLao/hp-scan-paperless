@@ -28,6 +28,14 @@ for var in IP LABEL RESOLUTION MODE PATTERN PAPERLESS_POST_DOCUMENT_URL PAPERLES
     printf '%s' "${!var}" > "$ENVDIR/$var"
 done
 
+# /app.sh adds --add-emulated-duplex only when ADD_EMULATED_DUPLEX exists, so the file is
+# written only when the option is on (its value is the page assembly mode).
+rm -f "$ENVDIR/ADD_EMULATED_DUPLEX"
+if [ "$(opt emulated_duplex)" = "true" ]; then
+    printf '%s' "$(opt duplex_mode)" > "$ENVDIR/ADD_EMULATED_DUPLEX"
+    echo "Emulated two-sided scan on (order: $(opt duplex_mode))"
+fi
+
 if [ -z "$IP" ] || [ -z "$url" ] || [ -z "$PAPERLESS_TOKEN" ]; then
     echo "Set printer_ip, paperless_url and paperless_token in the add-on configuration, then restart the add-on."
     exit 1
