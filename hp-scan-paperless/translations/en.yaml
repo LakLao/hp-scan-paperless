@@ -29,6 +29,9 @@ configuration:
   duplex_check:
     name: Check two-sided page count
     description: When fronts and backs of a two-sided scan have a different number of pages, fire the Home Assistant event hp_scan_duplex_mismatch (for a notification)
+  incomplete_tag:
+    name: Tag for incomplete scans
+    description: Paperless tag given to a two-sided scan whose fronts and backs differ (created if missing). Leave empty to not tag
   debug:
     name: Debug log
     description: More details in the add-on log

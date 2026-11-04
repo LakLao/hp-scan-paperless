@@ -46,7 +46,8 @@ echo "Printer $IP, label \"$LABEL\", upload to $PAPERLESS_POST_DOCUMENT_URL"
 # Home Assistant event "hp_scan_duplex_mismatch" when fronts and backs differ in page count.
 # /app.sh stays the main process (process substitution), so stopping the add-on still works.
 if [ "$(opt emulated_duplex)" = "true" ] && [ "$(opt duplex_check)" != "false" ]; then
-    echo "Two-sided page check on (event: hp_scan_duplex_mismatch)"
+    export INCOMPLETE_TAG="$(opt incomplete_tag)"
+    echo "Two-sided page check on (event: hp_scan_duplex_mismatch${INCOMPLETE_TAG:+, Paperless tag: $INCOMPLETE_TAG})"
     exec /app.sh > >(node /duplex-watch.js) 2>&1
 fi
 exec /app.sh

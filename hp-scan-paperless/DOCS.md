@@ -37,6 +37,7 @@ destination stops working; on the next start it registers again.
 | Emulated two-sided scan | off | adds "<name> duplex": scan fronts, flip the stack, scan backs |
 | Two-sided page order | `document-wise` | order after flipping the whole stack |
 | Check two-sided page count | on | event in Home Assistant when fronts and backs differ |
+| Tag for incomplete scans | `Onvolledige scan` | Paperless tag for such a scan; empty = no tag |
 | Debug log | off | more details in the *Log* tab |
 
 Save, start, and switch on **Start on boot** and **Watchdog**. The *Log* tab shows
@@ -54,7 +55,13 @@ scan: 110
 front_pages: 3
 back_pages: 28
 addon: <this add-on's slug>
+tag: Onvolledige scan
 ```
+
+The PDF can't be held back (the scanner uploads it), but once Paperless has added it the
+add-on gives it the tag from *Tag for incomplete scans* (created if it doesn't exist yet), so
+you can filter on it and delete it after scanning again. The log shows
+`[duplex-check] scan #N: Paperless document D tagged "…"`.
 
 Use it as an automation trigger (*Event*, type `hp_scan_duplex_mismatch`), for example for a
 phone notification with a button that restarts the add-on.

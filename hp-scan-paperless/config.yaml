@@ -1,7 +1,7 @@
 # Home Assistant add-on: HP "Scan to Computer" -> Paperless-ngx.
 # Wraps node-hp-scan-to (https://github.com/manuc66/node-hp-scan-to).
 name: HP Scan to Paperless
-version: "1.11.1-4"
+version: "1.11.1-5"
 slug: hp_scan_paperless
 description: Scan on the HP printer (Scan to Computer) and upload to Paperless-ngx
 url: https://github.com/dosje/hp-scan-paperless
@@ -24,6 +24,7 @@ options:
   emulated_duplex: false
   duplex_mode: document-wise
   duplex_check: true
+  incomplete_tag: Onvolledige scan
   debug: false
 schema:
   printer_ip: str
@@ -36,4 +37,5 @@ schema:
   emulated_duplex: bool
   duplex_mode: list(document-wise|page-wise|reverse-front|reverse-both)
   duplex_check: bool
+  incomplete_tag: str?
   debug: bool

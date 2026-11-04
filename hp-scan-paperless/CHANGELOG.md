@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.11.1-5
+
+- An incomplete two-sided scan (fronts and backs differ) gets a Paperless tag once Paperless has added it; option *Tag for incomplete scans*, default `Onvolledige scan` (created if missing, empty = off). The event `hp_scan_duplex_mismatch` now also carries `tag`.
+
 ## 1.11.1-4
 
 - New option: check the page count of two-sided scans. If fronts and backs differ, the add-on fires the Home Assistant event `hp_scan_duplex_mismatch` (data: `scan`, `front_pages`, `back_pages`, `addon`), e.g. for a phone notification with a restart button. Needs Home Assistant API access (added).
