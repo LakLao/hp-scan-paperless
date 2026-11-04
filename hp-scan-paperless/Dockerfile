@@ -2,6 +2,7 @@
 FROM docker.io/manuc66/node-hp-scan-to:1.11.1
 
 COPY run.sh /addon-run.sh
+COPY duplex-watch.js /duplex-watch.js
 RUN chmod 755 /addon-run.sh
 
 # /init (s6) of the base image stays the entrypoint; it starts this script, which

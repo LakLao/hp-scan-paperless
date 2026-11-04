@@ -36,10 +36,28 @@ destination stops working; on the next start it registers again.
 | Multi-page scan as one PDF | on | otherwise one document per page |
 | Emulated two-sided scan | off | adds "<name> duplex": scan fronts, flip the stack, scan backs |
 | Two-sided page order | `document-wise` | order after flipping the whole stack |
+| Check two-sided page count | on | event in Home Assistant when fronts and backs differ |
 | Debug log | off | more details in the *Log* tab |
 
 Save, start, and switch on **Start on boot** and **Watchdog**. The *Log* tab shows
 `Using device at IP: …` and `Paperless configuration provided …`.
+
+## Two-sided page check
+
+If a page is skipped by the feeder, the fronts and backs of a two-sided scan differ in number
+and the PDF is incomplete (it is still uploaded). With *Check two-sided page count* on, the log
+then shows `[duplex-check] scan #N: X fronts but Y backs` and Home Assistant receives the event
+`hp_scan_duplex_mismatch`:
+
+```yaml
+scan: 110
+front_pages: 3
+back_pages: 28
+addon: <this add-on's slug>
+```
+
+Use it as an automation trigger (*Event*, type `hp_scan_duplex_mismatch`), for example for a
+phone notification with a button that restarts the add-on.
 
 ## Problems
 

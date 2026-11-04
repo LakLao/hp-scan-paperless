@@ -26,6 +26,9 @@ configuration:
   duplex_mode:
     name: Two-sided page order
     description: document-wise = backs scanned after flipping the whole stack (usual for a document feeder)
+  duplex_check:
+    name: Check two-sided page count
+    description: When fronts and backs of a two-sided scan have a different number of pages, fire the Home Assistant event hp_scan_duplex_mismatch (for a notification)
   debug:
     name: Debug log
     description: More details in the add-on log
