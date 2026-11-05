@@ -38,6 +38,7 @@ destination stops working; on the next start it registers again.
 | Two-sided page order | `document-wise` | order after flipping the whole stack |
 | Check two-sided page count | on | event in Home Assistant when fronts and backs differ |
 | Tag for incomplete scans | `Onvolledige scan` | Paperless tag for such a scan; empty = no tag |
+| Leave out blank pages | off | blank pages are removed before the upload; order stays the same |
 | Debug log | off | more details in the *Log* tab |
 
 Save, start, and switch on **Start on boot** and **Watchdog**. The *Log* tab shows
@@ -65,6 +66,25 @@ you can filter on it and delete it after scanning again. The log shows
 
 Use it as an automation trigger (*Event*, type `hp_scan_duplex_mismatch`), for example for a
 phone notification with a button that restarts the add-on.
+
+## Blank pages
+
+With *Leave out blank pages* on, the scanner hands the finished PDF to a small filter inside the
+add-on first. It looks at every page and leaves out the blank ones, then uploads the rest to
+Paperless. Two-sided scans are already assembled at that point, so the other pages keep their
+order.
+
+- A page is blank when less than 0.1 % of its area has ink (*Blank page threshold*). The outer
+  edges (punch holes, paper edge, feeder shadow) are ignored, and so are dust specks and light
+  grey text showing through from the other side. A page with only a staple mark or a page
+  number counts as blank; a signature or a single line of text does not.
+- The log shows, per scan, which pages were left out and the ink percentage of every page, e.g.
+  `[blank-pages] scan_….pdf: 16 page(s), left out 3 blank: 2, 6, 14`. Raise or lower the
+  threshold if a page is judged wrongly.
+- If every page looks blank, or the file is something the filter doesn't expect, it is uploaded
+  unchanged.
+- Pages are removed with an incremental PDF update: the original file stays inside, with a new
+  page list appended. Every PDF reader, and Paperless, only shows the remaining pages.
 
 ## Problems
 

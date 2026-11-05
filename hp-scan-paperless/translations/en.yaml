@@ -32,6 +32,12 @@ configuration:
   incomplete_tag:
     name: Tag for incomplete scans
     description: Paperless tag given to a two-sided scan whose fronts and backs differ (created if missing). Leave empty to not tag
+  remove_blank_pages:
+    name: Leave out blank pages
+    description: Blank pages (e.g. empty backs of a two-sided scan) are left out of the PDF before it goes to Paperless; the other pages keep their order
+  blank_threshold:
+    name: Blank page threshold (% ink)
+    description: A page counts as blank below this share of its area with ink. Default 0.1 (dust, a staple or only a page number is blank; a signature or a line of text is not)
   debug:
     name: Debug log
     description: More details in the add-on log

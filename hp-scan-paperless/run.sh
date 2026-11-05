@@ -42,6 +42,17 @@ if [ -z "$IP" ] || [ -z "$url" ] || [ -z "$PAPERLESS_TOKEN" ]; then
 fi
 echo "Printer $IP, label \"$LABEL\", upload to $PAPERLESS_POST_DOCUMENT_URL"
 
+# Blank pages: the scanner posts to blank-filter.js on 127.0.0.1, which leaves out blank pages
+# of the finished PDF (order unchanged) and passes the upload on to Paperless. The exported
+# PAPERLESS_POST_DOCUMENT_URL stays the real address (used by the filter and duplex-watch.js).
+if [ "$(opt remove_blank_pages)" = "true" ]; then
+    export BLANK_THRESHOLD="$(opt blank_threshold)"
+    export BLANK_FILTER_PORT=3010
+    printf '%s' "http://127.0.0.1:$BLANK_FILTER_PORT/api/documents/post_document/" > "$ENVDIR/PAPERLESS_POST_DOCUMENT_URL"
+    echo "Blank pages are left out before upload (threshold ${BLANK_THRESHOLD:-0.1}% ink)"
+    ( set +e; while true; do node /addon/blank-filter.js; echo "[blank-pages] filter stopped; restarting"; sleep 2; done ) &
+fi
+
 # Two-sided check: the scanner's output also goes through duplex-watch.js, which fires the
 # Home Assistant event "hp_scan_duplex_mismatch" when fronts and backs differ in page count.
 # /app.sh stays the main process (process substitution), so stopping the add-on still works.
